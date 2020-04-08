@@ -12,7 +12,7 @@ def mean_hsv_in_roi(image, position):
 
   # TODO: ROI の範囲は要調整
   top, bottom = (position[1][1] + 120), (position[1][1] + 150)
-  left, right = position[1][0] - 100, position[1][0]
+  left, right = position[0][0], position[0][0] + 100
   roi = image[top: bottom, left: right]
   # cv2.rectangle(hsv, (left, top), (right, bottom), (255, 0, 0))
 
@@ -31,9 +31,9 @@ def judge_color(h, s, v):
 
   # TODO: 境界値は要調整
   color = 'Green'
-  if h < 60 and s < 100:
+  if (h <= 30) or (h >= 150):
     color = 'Red'
-  elif h < 60 and s >= 100:
+  elif (30 < h < 60) and (s > 100):
     color = 'Yellow'
 
   return color
