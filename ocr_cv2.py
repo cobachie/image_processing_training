@@ -31,7 +31,7 @@ def judge_color(h, s, v):
 
   # TODO: 境界値は要調整
   color = 'Green'
-  if (h <= 30) or (h >= 150):
+  if (h <= 30) or (h >= 120):
     color = 'Red'
   elif (30 < h < 60) and (s > 100):
     color = 'Yellow'
@@ -62,9 +62,16 @@ def main():
   image = cv2.imread(input_image_path, cv2.IMREAD_COLOR)
   # TODO: 画像の前処理
 
+  gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+
+  blur_image = cv2.GaussianBlur(gray, (15, 15), 0)
+
+  # cv2.imshow('sample', blur_image)
+  # cv2.waitKey(0)
+
   # 部屋番号と座標を取得
   word_boxes = tool.image_to_string(
-      Image.fromarray(image),
+      Image.fromarray(blur_image),
       lang=lang,
       builder=pyocr.builders.WordBoxBuilder(tesseract_layout=6)
   )
